@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自动播放图片</title>
+<style>
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  #filename {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+<div id="slideshow"></div>
+<div id="filename"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 图片文件夹绝对路径
+    const imageFolder = 'file:///C:/work/code/qrcode_file/output/qrcode/img/';
+    // 图片数量
+    const imageCount = 1000;
+    // 图片切换间隔（毫秒）
+    const interval = 100;
+
+    let currentIndex = 1;
+    const slideshow = document.getElementById('slideshow');
+    const filenameDisplay = document.getElementById('filename');
+
+    function preloadImages() {
+      for (let i = 1; i <= imageCount; i++) {
+        const img = new Image();
+        img.src = imageFolder + i + '.png';
+      }
+    }
+
+    function showNextImage() {
+      slideshow.innerHTML = '';
+      const img = new Image();
+      img.src = imageFolder + currentIndex + '.png';
+      slideshow.appendChild(img);
+      filenameDisplay.textContent = currentIndex + '.png';
+      currentIndex = (currentIndex % imageCount) + 1;
+      if (currentIndex === 1) {
+        clearInterval(slideshowInterval);
+        alert('图片播放完毕！');
+      }
+    }
+
+    // 预加载图片
+    preloadImages();
+
+    // 开始播放图片
+    const slideshowInterval = setInterval(showNextImage, interval);
+  });
+</script>
+</body>
+</html>

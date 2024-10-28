@@ -1,0 +1,1 @@
+ffmpeg -i D:\AKATSUGI\dcit\20240509093923.webm -f image2  -r 10 %06d.png
